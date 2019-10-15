@@ -13,7 +13,8 @@ export {
     useAsObservableSource,
     useLocalStore,
     isUsingStaticRendering,
-    useStaticRendering
+    useStaticRendering,
+    optimizeScheduler
 } from "mobx-react-lite"
 
 export { observer } from "./observer"

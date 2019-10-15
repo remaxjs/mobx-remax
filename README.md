@@ -19,7 +19,7 @@ There are currently two actively maintained versions of mobx-react:
 | v6          | 16.8.0 and higher        | Yes                                                                              |
 | v5          | 0.13 and higher          | No, but it is possible to use `<Observer>` sections inside hook based components |
 
-The user guide covers this [in a more detail](https://mobx-react.js.org/libraries). 
+The user guide covers this [in a more detail](https://mobx-react.js.org/libraries).
 
 The V5 documentation can be found in the [README_v5](README_v5.md).
 
@@ -312,6 +312,7 @@ Notes:
 -   The original component wrapped by `inject` is available as the `wrappedComponent` property of the created higher order component.
 
 #### "The set of provided stores has changed" error
+
 Values provided through `Provider` should be final. Make sure that if you put things in `context` that might change over time, that they are `@observable` or provide some other means to listen to changes, like callbacks. However, if your stores will change over time, like an observable value of another store, MobX will throw an error.
 This restriction exists mainly for legacy reasons. If you have a scenario where you need to modify the set of stores, please leave a comment about it in this issue https://github.com/mobxjs/mobx-react/issues/745. Or a preferred way is to [use React Context](https://mobx-react.js.org/recipes-context) directly which does not have this restriction.
 
@@ -512,6 +513,31 @@ The reason is that the standard React devtools are also capable of highlighting 
 And the dependency tree of a component can now be inspected by the standard devtools as well, as shown in the image below:
 
 ![hooks.png](hooks.png)
+
+## Optimize rendering
+
+[Check out the elaborate explanation](https://github.com/mobxjs/mobx-react-lite/issues/153#issuecomment-490511464).
+
+If this is something that concerns you, we have prepared files you can simply import to configure MobX to use React batched updates depending on your platform.
+
+**React DOM:**
+
+> import 'mobx-react/optimizeForReactDom'
+
+**React Native:**
+
+> import 'mobx-react/optimizeForReactNative'
+
+Import one of these before any React rendering is happening, typically `index.js/ts`. For Jest tests you can utilize [setupFilesAfterEnv](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array).
+
+### Custom batched updates
+
+Above imports are for a convenience. If you for some reason have customized version of batched updates, you can do the following instead.
+
+```js
+import { optimizeScheduler } from "mobx-react"
+optimizeScheduler(customBatchedUpdates)
+```
 
 ## FAQ
 
