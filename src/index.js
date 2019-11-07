@@ -1,6 +1,6 @@
 import { observable, configure } from "mobx"
 import { Component } from "react"
-import { unstable_batchedUpdates as rdBatched } from "react-dom"
+import { unstable_batchedUpdates as rdBatched } from "remax"
 
 if (!Component) throw new Error("mobx-react requires React to be available")
 if (!observable) throw new Error("mobx-react requires mobx to be available")
